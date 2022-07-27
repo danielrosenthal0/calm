@@ -13,7 +13,7 @@ calm = pd.read_excel("calm3.xlsx")
 
 
 #selecting smaller set of data that aren't strings to create correlation map
-calm_small = calm.loc[0:38,["username", "is_verified", "media_count","follower_count","following_count","has_external_url","total_igtv_videos","total_clips_count","usertags_count","has_highlight_reels","is_business","account_type","engagement_rate","is_person_category","influencer_score","calm_influencer_score"]]
+calm_small = calm.loc[1:38,["username", "is_verified", "media_count","follower_count","following_count","has_external_url","total_igtv_videos","total_clips_count","usertags_count","has_highlight_reels","is_business","account_type","engagement_rate","is_person_category","influencer_score","calm_influencer_score"]]
 plt.figure(figsize=(16, 6))
 
 heatmap = sns.heatmap(calm_small.corr()[["calm_influencer_score"]].sort_values(by="calm_influencer_score", ascending = False), vmin=-1, vmax=1, annot=True, cmap='BrBG')
