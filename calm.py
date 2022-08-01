@@ -2,13 +2,14 @@
 #with finding a good influencer for the Calm app and a good influencer in general
 # %%
 # installing packages
+from cmath import exp
 import pandas as pd
 import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 # %%
 #importing data
-calm = pd.read_excel("calm3.xlsx")
+calm = pd.read_excel("calm3.xlsx", index_col=None)
 #print(calm.head())
 
 # %%
@@ -19,3 +20,13 @@ plt.figure(figsize=(16, 6))
 heatmap = sns.heatmap(calm_small.corr()[["calm_influencer_score"]].sort_values(by="calm_influencer_score", ascending = False), vmin=-1, vmax=1, annot=True, cmap='BrBG')
 heatmap.set_title('Features correlating with how good a user may be for Calm', fontdict={'fontsize':12}, pad=12);
 plt.show()
+
+
+# organizing by email prefix
+# %%
+calm.head()
+# %%
+calm[["email_prefix","email_suffix"]] = calm["public_email"].str.split("@", expand = True)
+# %%
+calm["email_prefix"]
+# %%
