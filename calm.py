@@ -30,3 +30,5 @@ calm[["email_prefix","email_suffix"]] = calm["public_email"].str.split("@", expa
 # %%
 calm["email_prefix"]
 # %%
+# creating gmail, yahoo, etc columns
+calm["gmail"] = "gmail.com" in calm["email_suffix"]
