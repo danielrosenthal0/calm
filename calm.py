@@ -10,11 +10,24 @@ import matplotlib.pyplot as plt
 # %%
 #importing data
 calm = pd.read_excel("calm3.xlsx", index_col=None)
-#print(calm.head())
+
+# organizing by email prefix
+
+# %%
+calm[["email_prefix","email_suffix"]] = calm["public_email"].str.split("@", expand = True)
+# %%
+calm["email_prefix"]
+# %%
+# creating gmail, yahoo, etc columns
+calm["gmail"] = calm["email_suffix"].str.contains('gmail')
+calm["yahoo"] = calm["email_suffix"].str.contains('yahoo')
+calm["contact"] = calm["email_prefix"].str.contains('contact')
+calm["info"] = calm["email_prefix"].str.contains('info')
+
 
 # %%
 #selecting smaller set of data that aren't strings to create correlation map
-calm_small = calm.loc[1:38,["username", "is_verified", "media_count","follower_count","following_count","has_external_url","total_igtv_videos","total_clips_count","usertags_count","has_highlight_reels","is_business","account_type","engagement_rate","is_person_category","influencer_score","calm_influencer_score"]]
+calm_small = calm.loc[1:38,["username", "is_verified", "media_count","follower_count","following_count","has_external_url","total_igtv_videos","total_clips_count","usertags_count","has_highlight_reels","is_business","account_type","gmail", "yahoo", "contact", "info","engagement_rate","is_person_category","influencer_score","calm_influencer_score"]]
 plt.figure(figsize=(16, 6))
 # %%
 heatmap = sns.heatmap(calm_small.corr()[["calm_influencer_score"]].sort_values(by="calm_influencer_score", ascending = False), vmin=-1, vmax=1, annot=True, cmap='BrBG')
@@ -22,13 +35,6 @@ heatmap.set_title('Features correlating with how good a user may be for Calm', f
 plt.show()
 
 
-# organizing by email prefix
+
+
 # %%
-calm.head()
-# %%
-calm[["email_prefix","email_suffix"]] = calm["public_email"].str.split("@", expand = True)
-# %%
-calm["email_prefix"]
-# %%
-# creating gmail, yahoo, etc columns
-calm["gmail"] = "gmail.com" in calm["email_suffix"]
